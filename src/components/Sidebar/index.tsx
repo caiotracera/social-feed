@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import { PencilLine } from 'phosphor-react';
 
 import styles from './sidebar.module.css';
+import { Avatar } from '../Avatar';
 
 export function Sidebar() {
   return (
@@ -13,7 +14,7 @@ export function Sidebar() {
       />
 
       <div className={styles.profile}>
-        <img src={faker.image.avatar()} alt={''} className={styles.avatar} />
+        <Avatar src={faker.image.avatar()} />
         <strong>{faker.person.fullName()}</strong>
         <span>{faker.person.jobTitle()}</span>
       </div>

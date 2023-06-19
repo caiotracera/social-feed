@@ -2,12 +2,13 @@ import { faker } from '@faker-js/faker';
 
 import { Comment } from '../Comment';
 import styles from './post.module.css';
+import { Avatar } from '../Avatar';
 export function Post() {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.authorContainer}>
-          <img src={faker.image.avatar()} alt="" className={styles.avatar} />
+          <Avatar src={faker.image.avatar()} />
           <div className={styles.authorInfo}>
             <strong>{faker.person.fullName()}</strong>
             <span>{faker.person.jobTitle()}</span>
