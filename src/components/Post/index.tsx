@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-// import { PostProps } from './types.ts';
+import { Comment } from '../Comment';
 import styles from './post.module.css';
 export function Post() {
   return (
@@ -27,6 +27,12 @@ export function Post() {
           <button type="submit">Publicar</button>
         </footer>
       </form>
+
+      <div className="commentList">
+        <Comment />
+        <Comment />
+        <Comment />
+      </div>
     </article>
   );
 }
