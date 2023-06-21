@@ -1,24 +1,25 @@
-import { faker } from '@faker-js/faker';
-
 import { Comment } from '../Comment';
-import styles from './post.module.css';
 import { Avatar } from '../Avatar';
-export function Post() {
+
+import styles from './post.module.css';
+import { PostProps } from './types';
+
+export function Post({ author, comments, content, publishedAt }: PostProps) {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.authorContainer}>
-          <Avatar src={faker.image.avatar()} />
+          <Avatar src={author.avatar_url} />
           <div className={styles.authorInfo}>
-            <strong>{faker.person.fullName()}</strong>
-            <span>{faker.person.jobTitle()}</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time dateTime={faker.date.past().toString()}>Públicado há 1hr</time>
+        <time dateTime={publishedAt}>Públicado há 1hr</time>
       </header>
 
       <div className={styles.content}>
-        <p>{faker.lorem.paragraphs({ min: 1, max: 10 }, '\n\n')}</p>
+        <p dangerouslySetInnerHTML={{ __html: content }} />
       </div>
 
       <form className={styles.commentForm}>
@@ -30,9 +31,9 @@ export function Post() {
       </form>
 
       <div className="commentList">
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Comment key={comment.id} {...comment} />
+        ))}
       </div>
     </article>
   );

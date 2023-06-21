@@ -1,31 +1,32 @@
-import { faker } from '@faker-js/faker';
-
-import styles from './comment.module.css';
 import { ThumbsUp, Trash } from 'phosphor-react';
+
 import { Avatar } from '../Avatar';
 
-export function Comment() {
+import styles from './comment.module.css';
+import { CommentProps } from './types';
+
+export function Comment({ author, content, likes, publishedAt }: CommentProps) {
   return (
     <div className={styles.comment}>
-      <Avatar src={faker.image.avatar()} hasBorder={false} />
+      <Avatar src={author.avatar_url} hasBorder={false} />
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
             <div className={styles.authorAndTime}>
-              <strong>{faker.person.fullName()}</strong>
-              <span>Cerca de 1hr atrás</span>
+              <strong>{author.name}</strong>
+              <time dateTime={publishedAt}>Cerca de 1hr atrás</time>
             </div>
 
             <button title="Deletar comentário">
               <Trash size={24} />
             </button>
           </header>
-          <p>{faker.lorem.paragraph()}</p>
+          <p dangerouslySetInnerHTML={{ __html: content }} />
         </div>
         <footer>
           <button>
             <ThumbsUp />
-            Aplaudir <span>{faker.number.int({ max: 100 })}</span>
+            Aplaudir <span>{likes}</span>
           </button>
         </footer>
       </div>

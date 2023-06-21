@@ -1,4 +1,10 @@
+import { AuthorProps } from '../Author/types';
+import { CommentProps } from '../Comment/types';
+
 export type PostProps = {
-  author: string;
+  id: string;
+  author: AuthorProps;
+  publishedAt: string;
   content: string;
+  comments: CommentProps[];
 };
