@@ -29,6 +29,12 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
     setNewCommentText('');
   }
 
+  function deleteComment(id: string) {
+    setPostComments((prevState) =>
+      prevState.filter((comment) => comment.id !== id),
+    );
+  }
+
   function handleNewCommentChange(
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
@@ -67,7 +73,11 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
 
       <div className="commentList">
         {postComments.map((comment) => (
-          <Comment key={comment.id} {...comment} />
+          <Comment
+            key={comment.id}
+            {...comment}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>

@@ -1,4 +1,4 @@
-import { AuthorProps } from "../Author/types";
+import { AuthorProps } from '../Author/types';
 
 export type CommentProps = {
   id: string;
@@ -6,4 +6,5 @@ export type CommentProps = {
   publishedAt: string;
   content: string;
   likes: number;
-}
+  onDeleteComment?: (id: string) => void;
+};

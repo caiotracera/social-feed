@@ -5,7 +5,18 @@ import { Avatar } from '../Avatar';
 import styles from './comment.module.css';
 import { CommentProps } from './types';
 
-export function Comment({ author, content, likes, publishedAt }: CommentProps) {
+export function Comment({
+  id,
+  author,
+  content,
+  likes,
+  publishedAt,
+  onDeleteComment,
+}: CommentProps) {
+  function handleDeleteComment() {
+    onDeleteComment && onDeleteComment(id);
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar src={author.avatar_url} hasBorder={false} />
@@ -17,7 +28,7 @@ export function Comment({ author, content, likes, publishedAt }: CommentProps) {
               <time dateTime={publishedAt}>Cerca de 1hr atrás</time>
             </div>
 
-            <button title="Deletar comentário">
+            <button title="Deletar comentário" onClick={handleDeleteComment}>
               <Trash size={24} />
             </button>
           </header>
