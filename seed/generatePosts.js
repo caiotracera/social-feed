@@ -49,7 +49,7 @@ function seed() {
     posts.push(post);
   }
 
-  return posts;
+  return posts.sort((a, b) => b.publishedAt - a.publishedAt);
 }
 
 async function saveSeed(seed) {
