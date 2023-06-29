@@ -36,7 +36,12 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
         id: faker.string.uuid(),
         content: newCommentText,
         publishedAt: new Date().toISOString(),
-        author: author,
+        author: {
+          id: faker.string.uuid(),
+          name: faker.person.fullName(),
+          avatar_url: faker.internet.avatar(),
+          role: faker.person.jobTitle(),
+        },
         likes: 0,
       },
     ]);
