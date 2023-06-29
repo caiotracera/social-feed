@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { ThumbsUp, Trash } from 'phosphor-react';
 
 import { Avatar } from '../Avatar';
@@ -16,6 +18,18 @@ export function Comment({
   onDeleteComment,
 }: CommentProps) {
   const [likeCount, setLikeCount] = useState(likes);
+
+  const publishedDateFormatted = format(
+    new Date(publishedAt),
+    "d 'de' LLLL 'às' HH:mm'h'",
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(
+    new Date(publishedAt),
+    {
+      locale: ptBR,
+    },
+  );
 
   function handleDeleteComment() {
     onDeleteComment && onDeleteComment(id);
@@ -37,7 +51,9 @@ export function Comment({
           <header>
             <div className={styles.authorAndTime}>
               <strong>{author.name}</strong>
-              <time dateTime={publishedAt}>Cerca de 1hr atrás</time>
+              <time dateTime={publishedDateFormatted}>
+                {publishedDateRelativeToNow} atrás
+              </time>
             </div>
 
             <button title="Deletar comentário" onClick={handleDeleteComment}>

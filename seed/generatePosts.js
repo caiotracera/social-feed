@@ -1,6 +1,7 @@
-import { faker } from '@faker-js/faker';
 import { writeFile } from 'fs/promises';
 import { resolve } from 'path';
+
+import { faker } from '@faker-js/faker';
 
 function generateAuthor() {
   return {
@@ -25,7 +26,7 @@ function generateComment(refDate) {
   return {
     id: faker.string.uuid(),
     author: generateAuthor(),
-    publishedAt: faker.date.recent({ refDate }),
+    publishedAt: faker.date.between({ from: refDate, to: new Date() }),
     content: faker.lorem.paragraph(),
     likes: faker.number.int({ min: 0, max: 100 }),
   };
