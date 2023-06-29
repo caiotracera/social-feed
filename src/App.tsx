@@ -1,11 +1,9 @@
 import { Header } from './components/Header';
 import { Post } from './components/Post';
 import { Sidebar } from './components/Sidebar';
-
+import posts from './mocks/posts.json';
 import styles from './styles/app.module.css';
 import './styles/global.css';
-
-import posts from './mocks/posts.json';
 
 export function App() {
   return (

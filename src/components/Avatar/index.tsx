@@ -1,5 +1,5 @@
-import { AvatarProps } from './types.ts';
 import styles from './avatar.module.css';
+import { AvatarProps } from './types.ts';
 
 export function Avatar({ src, hasBorder = true }: AvatarProps) {
   return (

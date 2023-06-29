@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { PencilLine } from 'phosphor-react';
 
-import styles from './sidebar.module.css';
 import { Avatar } from '../Avatar';
+
+import styles from './sidebar.module.css';
 
 export function Sidebar() {
   return (
