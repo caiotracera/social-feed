@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { ThumbsUp, Trash } from 'phosphor-react';
 
 import { Avatar } from '../Avatar';
@@ -13,8 +15,18 @@ export function Comment({
   publishedAt,
   onDeleteComment,
 }: CommentProps) {
+  const [likeCount, setLikeCount] = useState(likes);
+
   function handleDeleteComment() {
     onDeleteComment && onDeleteComment(id);
+  }
+
+  function handleLikeComment(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) {
+    event.preventDefault();
+
+    setLikeCount((prevState) => prevState + 1);
   }
 
   return (
@@ -35,9 +47,9 @@ export function Comment({
           <p dangerouslySetInnerHTML={{ __html: content }} />
         </div>
         <footer>
-          <button>
+          <button onClick={handleLikeComment}>
             <ThumbsUp />
-            Aplaudir <span>{likes}</span>
+            Aplaudir <span>{likeCount}</span>
           </button>
         </footer>
       </div>
