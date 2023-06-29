@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { faker } from '@faker-js/faker';
 
+import { faker } from '@faker-js/faker';
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
+import { Avatar } from '../Avatar';
 import { Comment } from '../Comment';
 import { CommentProps } from '../Comment/types';
-import { Avatar } from '../Avatar';
 
 import styles from './post.module.css';
 import { PostProps } from './types';
@@ -11,6 +14,18 @@ import { PostProps } from './types';
 export function Post({ author, comments, content, publishedAt }: PostProps) {
   const [postComments, setPostComments] = useState<CommentProps[]>(comments);
   const [newCommentText, setNewCommentText] = useState<string>('');
+
+  const publishedDateFormatted = format(
+    new Date(publishedAt),
+    "d 'de' LLLL 'às' HH:mm'h'",
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(
+    new Date(publishedAt),
+    {
+      locale: ptBR,
+    },
+  );
 
   function handleCreateNewComment(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,6 +44,12 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
     setNewCommentText('');
   }
 
+  function handleNewCommentInvalid(
+    event: React.FormEvent<HTMLTextAreaElement>,
+  ) {
+    event.currentTarget.setCustomValidity('O comentário não pode ser vazio!');
+  }
+
   function deleteComment(id: string) {
     setPostComments((prevState) =>
       prevState.filter((comment) => comment.id !== id),
@@ -38,8 +59,11 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
   function handleNewCommentChange(
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) {
+    event.target.setCustomValidity('');
     setNewCommentText(event.target.value);
   }
+
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -51,7 +75,9 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
             <span>{author.role}</span>
           </div>
         </div>
-        <time dateTime={publishedAt}>Públicado há 1hr</time>
+        <time dateTime={publishedDateFormatted}>
+          Públicado há {publishedDateRelativeToNow}
+        </time>
       </header>
 
       <div className={styles.content}>
@@ -64,10 +90,14 @@ export function Post({ author, comments, content, publishedAt }: PostProps) {
           placeholder={'Deixe um comentário'}
           name={'comment'}
           onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
           value={newCommentText}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
 
